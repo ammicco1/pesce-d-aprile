@@ -1,7 +1,7 @@
 const express = require("express");
 const server = express();
 
-const port = 3000 || process.env.PORT;
+const port = process.env.PORT || 3000;
 
 server.use(express.static(__dirname));
 server.use(express.urlencoded({
