@@ -14,5 +14,7 @@ server.listen(port, function(){
 });
 
 server.get("/", function(req, res){
+    console.log("request: ", req.headers);
+
     res.sendFile(__dirname + "/views/index.html");
 });
