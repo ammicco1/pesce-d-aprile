@@ -16,9 +16,7 @@ server.listen(port, function(){
 
 server.get("/", function(req, res){
     counter++;
-
-    console.log("request: ", req.headers);
-    console.log(counter);
+    console.log("count: ", counter);
 
     res.sendFile(__dirname + "/views/index.html");
 });
