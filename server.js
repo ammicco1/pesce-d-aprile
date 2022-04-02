@@ -1,8 +1,9 @@
+const { count } = require("console");
 const express = require("express");
 const server = express();
+const fs = require("fs");
 
 const port = process.env.PORT || 3000;
-var counter = 0;
 
 server.use(express.static(__dirname));
 server.use(express.urlencoded({
@@ -15,8 +16,27 @@ server.listen(port, function(){
 });
 
 server.get("/", function(req, res){
-    counter++;
-    console.log("count: ", counter);
-
-    res.sendFile(__dirname + "/views/index.html");
+    update_count(__dirname + "/public/files/count").then(function(){
+        res.sendFile(__dirname + "/views/index.html");
+    });
 });
+
+
+async function write(path, data){
+    fs.writeFile(path, data, function(err){
+        if(err){console.log(err);}
+    });
+}
+
+async function update_count(path){
+    fs.readFile(path, 'utf8', function(err, data){
+        if(err){console.log(err);}
+
+        var counter = parseInt(data);
+        counter++;
+
+        console.log("Counter:", counter);
+
+        write(path, counter + "");
+    });
+}
